@@ -1,23 +1,24 @@
 import express from 'express';
 import cors from 'cors';
-import pg from 'pg';
+
 import Joi from 'joi';
 import bcrypt from 'bcrypt';
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-const { Pool } = pg;
 
-const connectionData = {
-  user: "postgres",
-  password: "",
-  host: "localhost",
-  port: 5432,
-  database: "mywallet",
-};
+app.post('/login', startSession);
 
-const connection = new Pool(connectionData);
+app.post('/sign-up', createNewUser);
 
-app.listen(4000);
+app.get('/home', getEntries);
+
+app.post('/income', addIncome);
+
+app.post('/expense', addExpense);
+
+
+app.listen(4000); // move outta here when testing
