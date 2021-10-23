@@ -1,8 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 
-import Joi from 'joi';
-import bcrypt from 'bcrypt';
+import { startSession } from "./controllers/login.js";
+import { createNewUser } from "./controllers/signup.js";
+import { getEntries } from "./controllers/home.js";
+import { addIncome } from "./controllers/income.js";
 
 const app = express();
 
@@ -18,7 +20,8 @@ app.get('/home', getEntries);
 
 app.post('/income', addIncome);
 
-app.post('/expense', addExpense);
+// app.post('/expense', addExpense);
 
+// maybe i can use only one route for creating both expense and income
 
 app.listen(4000); // move outta here when testing

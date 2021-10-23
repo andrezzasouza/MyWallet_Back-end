@@ -6,6 +6,8 @@ const validateLogIn = joi.object({
 });
 
 // update along with signup
+// validate email format
+// name should only allow letters, no numbers or symbols
 // add regex
 
 export {
