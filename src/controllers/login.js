@@ -54,7 +54,6 @@ async function startSession(req, res) {
     }
 
     // remove else
-
     // use join here
     
   } catch (error) {

@@ -1,6 +1,7 @@
 import connection from "../database/database.js";
 
 async function getEntries(req, res) {
+  console.log("aqui")
   // invalid data 400
   // user already exists 409
   // successful 201
@@ -24,16 +25,18 @@ async function getEntries(req, res) {
     console.log("a4");
 
     const userId = result.rows[0].userId;
-    console.log("a5");
-    await connection.query(
-      'SELECT * FROM entries WHERE "userId" = $1 ORDER BY date DESC',
+    console.log(userId);
+    const userEntries = await connection.query(
+      'SELECT * FROM entries WHERE "userId" = $1 ORDER BY date DESC, id DESC',
       [userId]
     );
     // check if table is working as it should
     // use join here
-    console.log("a6");
+    console.log("a6", userEntries);
 
-    res.send();
+    console.log(typeof userEntries.rows[0].value);
+
+    res.send(userEntries.rows);
 
   } catch (error) {
     res.sendStatus(500);

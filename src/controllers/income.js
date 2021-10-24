@@ -29,18 +29,18 @@ async function addIncome(req, res) {
 
   const authorization = req.headers['authorization'];
   const token = authorization?.replace('Bearer ', '');
-  
+  console.log("tk", token);
   if (!token) return res.sendStatus(401);
+
+  console.log(typeof value);
   
   try {
-    
     const result = await connection.query(
       `SELECT * FROM sessions WHERE token = $1`,
       [token]
     );
     
     if (result.rowCount === 0) {
-      
       return res.status(401).send();
       // which status do I use here?
       // 404, 401, 403?
