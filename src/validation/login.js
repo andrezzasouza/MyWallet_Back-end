@@ -6,6 +6,7 @@ const validateLogIn = joi
       .string()
       .email()
       .min(6)
+      .lowercase()
       .required(),
     password: joi
       .string()

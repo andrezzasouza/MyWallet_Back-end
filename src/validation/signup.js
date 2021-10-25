@@ -5,12 +5,14 @@ const validateSignUp = joi
     name: joi
       .string()
       .min(2)
+      .max(40)
       .pattern(/[a-zA-Z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u00FF\- ]+/i)
       .required(),
     email: joi
       .string()
       .email()
       .min(6)
+      .lowercase()
       .required(),
     password: joi
       .string()
@@ -22,8 +24,6 @@ const validateSignUp = joi
       .valid(joi.ref("password")),
   })
 .length(4);
-
-// limit max length of names?
 
 export {
   validateSignUp

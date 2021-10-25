@@ -14,6 +14,7 @@ async function getEntries(req, res) {
 
   try {
     console.log("a1");
+
     const result = await connection.query(
       `
         SELECT 
@@ -38,8 +39,9 @@ async function getEntries(req, res) {
       [token]
     );
     console.log("a2");
+    
     if (result.rowCount === 0) {
-      return res.status(401).send();
+      return res.status(204).send();
       console.log("a3");
       // which status do I use here?
       // 404, 401, 403?

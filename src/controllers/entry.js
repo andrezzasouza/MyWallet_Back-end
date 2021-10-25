@@ -32,8 +32,6 @@ async function addEntry(req, res) {
   const token = authorization?.replace('Bearer ', '');
   console.log("tk", token);
   if (!token) return res.sendStatus(401);
-
-  console.log(typeof value);
   
   try {
     const result = await connection.query(
@@ -47,8 +45,6 @@ async function addEntry(req, res) {
       // 404, 401, 403?
     }
     
-    // use join here?
-    
     const user = result.rows[0];
     const date = dayjs(Date.now()).format('YYYY-MM-DD');
     
@@ -56,8 +52,21 @@ async function addEntry(req, res) {
       'INSERT INTO entries ("userId", description, date, value, type) VALUES ($1, $2, $3, $4, $5)',
       [user.userId, description, date, value, type]
     );
-    
-    // think about how to calculate the balance
+
+    if (type === "income") {
+      await connection.query(
+        `UPDATE users SET balance = balance + $2 WHERE id = $1`, 
+        [user.userId, value]
+      );
+
+    }
+
+    if (type === "expense") {
+      await connection.query(
+        `UPDATE users SET balance = balance - $2 WHERE id = $1`,
+        [user.userId, value]
+      );
+    }
 
     res.sendStatus(201);
 
