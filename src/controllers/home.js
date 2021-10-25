@@ -1,24 +1,17 @@
 import connection from "../database/database.js";
 
 async function getEntries(req, res) {
-  console.log("aqui")
-  // invalid data 400
-  // user already exists 409
-  // successful 201
   const authorization = req.headers["authorization"];
   const token = authorization?.replace("Bearer ", "");
 
-  console.log(authorization);
-  if (!token) return res.sendStatus(403);
-  // confirm status
+  if (!token) return res.status(401).send("Acesso negado. Tente novamente.");
 
   try {
-    console.log("a1");
 
     const checkToken = await connection.query(`SELECT * FROM sessions WHERE token = $1`, [token]);
 
     if (checkToken.rowCount === 0) {
-      return res.status(401).send()
+      return res.status(401).send("Acesso negado. Tente novamente.")
     }
 
     const result = await connection.query(
@@ -44,30 +37,10 @@ async function getEntries(req, res) {
       `, 
       [token]
     );
-    console.log("a2");
     
     if (result.rowCount === 0) {
       return res.status(204).send();
-      console.log("a3");
-      // which status do I use here?
-      // 404, 401, 403?
-      // 204?
     }
-    console.log("a4");
-
-    // const userId = result.rows[0].userId;
-    // console.log(userId);
-    // const userEntries = await connection.query(
-    //   'SELECT * FROM entries WHERE "userId" = $1 ORDER BY date DESC, id DESC',
-    //   [userId]
-    // );
-
-    // check if table is working as it should
-    // use join here
-
-    // console.log("a8", typeof userBalance.rows[0].balance);
-
-    // console.log(typeof userEntries.rows[0].value);
 
     res.send(result.rows);
 

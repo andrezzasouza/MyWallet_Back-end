@@ -31,7 +31,7 @@ async function createNewUser (req, res) {
     }
 
     const hash = bcrypt.hashSync(password, 11);
-    await connection.query('INSERT INTO users (name, email, password) VALUES ($1, $2, $3)', [name, email, hash]);
+    await connection.query('INSERT INTO users (name, email, password, balance) VALUES ($1, $2, $3, $4)', [name, email, hash, 0]);
     res.sendStatus(201);
     
   } catch (error) {
