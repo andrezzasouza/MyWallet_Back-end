@@ -21,4 +21,4 @@ app.get('/home', getEntries);
 app.post('/entry', addEntry);
 
 
-app.listen(4000); // move outta here when testing
+export default app;

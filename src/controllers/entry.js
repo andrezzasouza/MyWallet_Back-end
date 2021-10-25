@@ -3,9 +3,6 @@ import { validateEntry } from "../validation/entry.js";
 import dayjs from 'dayjs';
 
 async function addEntry(req, res) {
-  // invalid data 400
-  // user already exists 409
-  // successful 201
 
   const {
     description,
@@ -20,18 +17,13 @@ async function addEntry(req, res) {
   }).error;
 
   if(errors) {
-    return res.status(400).send();
+    return res.status(400).send(errors.details[0].message);
   }
-  
-  
-  // errors.details[0].message;
-
-  // do I validate the token?
 
   const authorization = req.headers['authorization'];
   const token = authorization?.replace('Bearer ', '');
   console.log("tk", token);
-  if (!token) return res.sendStatus(401);
+  if (!token) return res.sendStatus(403);
   
   try {
     const result = await connection.query(
@@ -41,8 +33,6 @@ async function addEntry(req, res) {
     
     if (result.rowCount === 0) {
       return res.status(401).send();
-      // which status do I use here?
-      // 404, 401, 403?
     }
     
     const user = result.rows[0];
@@ -53,9 +43,11 @@ async function addEntry(req, res) {
       [user.userId, description, date, value, type]
     );
 
+    const updateBalance = `UPDATE users SET balance = balance`;
+
     if (type === "income") {
       await connection.query(
-        `UPDATE users SET balance = balance + $2 WHERE id = $1`, 
+        `${updateBalance} + $2 WHERE id = $1`, 
         [user.userId, value]
       );
 
@@ -63,7 +55,7 @@ async function addEntry(req, res) {
 
     if (type === "expense") {
       await connection.query(
-        `UPDATE users SET balance = balance - $2 WHERE id = $1`,
+        `${updateBalance} - $2 WHERE id = $1`,
         [user.userId, value]
       );
     }
@@ -71,7 +63,7 @@ async function addEntry(req, res) {
     res.sendStatus(201);
 
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).send({ message: "Não foi possível acessar a base de dados. Tente novamente." })
   }
 }
 

@@ -16,7 +16,7 @@ async function startSession(req, res) {
   }).error;
 
   if(errors) {
-    return res.status(400).send('Invalid data');
+    return res.status(400).send({message: errors.details[0].message});
   }
 
   try {
@@ -28,7 +28,7 @@ async function startSession(req, res) {
     if (result.rowCount === 0) {
       return res
         .status(404)
-        .send("You don't have an account yet. Please, sign up.");
+        .send({message: "Você ainda não tem uma conta. Clique abaixo para se cadastrar."});
     }
 
     const user = result.rows[0];
@@ -47,17 +47,11 @@ async function startSession(req, res) {
       res.status(200).send({token, name: user.name});
 
     } else {
-      res.status(401).send('Incorrect email and/or password.');
-      // email or password are wrong
-      // status 400, 401, 403 or 404?
-      // seems that it's 401
+      res.status(401).send({message: "Incorrect email and/or password."});
     }
-
-    // remove else
-    // use join here
     
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).send({ message: "Não foi possível acessar a base de dados. Tente novamente." });
   }
 }
 

@@ -9,11 +9,17 @@ async function getEntries(req, res) {
   const token = authorization?.replace("Bearer ", "");
 
   console.log(authorization);
-  if (!token) return res.sendStatus(401);
+  if (!token) return res.sendStatus(403);
   // confirm status
 
   try {
     console.log("a1");
+
+    const checkToken = await connection.query(`SELECT * FROM sessions WHERE token = $1`, [token]);
+
+    if (checkToken.rowCount === 0) {
+      return res.status(401).send()
+    }
 
     const result = await connection.query(
       `
@@ -66,7 +72,7 @@ async function getEntries(req, res) {
     res.send(result.rows);
 
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).send({ message: "Não foi possível acessar a base de dados. Tente novamente." })
   }
 }
 

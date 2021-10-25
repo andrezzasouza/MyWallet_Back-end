@@ -4,12 +4,6 @@ import { validateSignUp } from '../validation/signup.js';
 import bcrypt from 'bcrypt';
 
 async function createNewUser (req, res) {
-  // invalid data 400
-  // user already exists 409
-  // successful 201
-  // server error 500
-
-  console.log(req.body);
 
   const {
     name,
@@ -25,18 +19,15 @@ async function createNewUser (req, res) {
     repeatPassword,
   }).error;
 
-  // simplify theses consts
-
   if(errors) {
-    console.log(errors);
-    return res.status(400).send('Invalid data');
+    return res.status(400).send({message: errors.details[0].message});
   }
   
   try {
     const checkUser = await connection.query('SELECT * FROM users WHERE email = $1', [email]);
 
     if (checkUser.rowCount !== 0) {
-      return res.status(409).send('You already have an account. Please, log in.');
+      return res.status(409).send({message: 'Você já tem uma conta. Faça o login, por favor.'});
     }
 
     const hash = bcrypt.hashSync(password, 11);
@@ -44,7 +35,7 @@ async function createNewUser (req, res) {
     res.sendStatus(201);
     
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500).send({ message: "Não foi possível acessar a base de dados. Tente novamente." })
   }
 }
 
