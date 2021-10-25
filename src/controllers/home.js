@@ -14,7 +14,29 @@ async function getEntries(req, res) {
 
   try {
     console.log("a1");
-    const result = await connection.query('SELECT * FROM sessions WHERE token = $1', [token]);
+    const result = await connection.query(
+      `
+        SELECT 
+          users.balance, 
+          entries.description, 
+          entries.date, 
+          entries.value, 
+          entries.type, 
+          entries.id 
+        FROM 
+          sessions 
+        JOIN 
+          entries ON entries."userId" = sessions."userId" 
+        JOIN 
+          users ON sessions."userId" = users.id 
+        WHERE 
+          sessions.token = $1
+        ORDER BY 
+          date DESC, id DESC
+        ;
+      `, 
+      [token]
+    );
     console.log("a2");
     if (result.rowCount === 0) {
       return res.status(401).send();
@@ -24,19 +46,21 @@ async function getEntries(req, res) {
     }
     console.log("a4");
 
-    const userId = result.rows[0].userId;
-    console.log(userId);
-    const userEntries = await connection.query(
-      'SELECT * FROM entries WHERE "userId" = $1 ORDER BY date DESC, id DESC',
-      [userId]
-    );
+    // const userId = result.rows[0].userId;
+    // console.log(userId);
+    // const userEntries = await connection.query(
+    //   'SELECT * FROM entries WHERE "userId" = $1 ORDER BY date DESC, id DESC',
+    //   [userId]
+    // );
+
     // check if table is working as it should
     // use join here
-    console.log("a6", userEntries);
 
-    console.log(typeof userEntries.rows[0].value);
+    // console.log("a8", typeof userBalance.rows[0].balance);
 
-    res.send(userEntries.rows);
+    // console.log(typeof userEntries.rows[0].value);
+
+    res.send(result.rows);
 
   } catch (error) {
     res.sendStatus(500);
