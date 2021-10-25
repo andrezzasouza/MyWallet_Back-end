@@ -28,9 +28,10 @@ async function createNewUser (req, res) {
   // simplify theses consts
 
   if(errors) {
+    console.log(errors);
     return res.status(400).send('Invalid data');
   }
-
+  
   try {
     const checkUser = await connection.query('SELECT * FROM users WHERE email = $1', [email]);
 

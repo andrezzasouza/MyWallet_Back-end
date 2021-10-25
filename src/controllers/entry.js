@@ -1,8 +1,8 @@
 import connection from "../database/database.js";
-import { validateIncome } from "../validation/income.js";
+import { validateEntry } from "../validation/entry.js";
 import dayjs from 'dayjs';
 
-async function addIncome(req, res) {
+async function addEntry(req, res) {
   // invalid data 400
   // user already exists 409
   // successful 201
@@ -13,7 +13,7 @@ async function addIncome(req, res) {
     value
   } = req.body;
 
-  const errors = validateIncome.validate({
+  const errors = validateEntry.validate({
     description,
     value,
     type
@@ -66,5 +66,5 @@ async function addIncome(req, res) {
 }
 
 export {
-  addIncome
+  addEntry
 }
