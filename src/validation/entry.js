@@ -17,8 +17,6 @@ const validateEntry = joi.object({
     .required()
 }).length(3);
 
-//confirm that it wouldn't allow things other than numbers when using Thunder Client
-
 export {
   validateEntry
 }

@@ -22,7 +22,7 @@ async function addEntry(req, res) {
 
   const authorization = req.headers['authorization'];
   const token = authorization?.replace('Bearer ', '');
-  console.log("tk", token);
+
   if (!token) return res.status(401).send("Acesso negado. Tente novamente.");
   
   try {
@@ -42,8 +42,6 @@ async function addEntry(req, res) {
       'INSERT INTO entries ("userId", description, date, value, type) VALUES ($1, $2, $3, $4, $5)',
       [user.userId, description, date, value, type]
     );
-    console.log("va", value)
-    console.log("ty", type)
 
     const updateBalance = `UPDATE users SET balance = balance`;
 
@@ -55,15 +53,13 @@ async function addEntry(req, res) {
     }
     const teste = await connection.query('SELECT * FROM users WHERE id =  84');
 
-    console.log("rows", teste.rows);
-
     if (type === "expense") {
       await connection.query(
         `${updateBalance} - $2 WHERE id = $1`,
         [user.userId, value]
       );
     }
-    console.log("aqui3");
+
     res.sendStatus(201);
 
   } catch (error) {
