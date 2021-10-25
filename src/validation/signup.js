@@ -23,6 +23,8 @@ const validateSignUp = joi
   })
 .length(4);
 
+// limit max length of names?
+
 export {
   validateSignUp
 }

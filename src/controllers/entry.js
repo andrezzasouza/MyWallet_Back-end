@@ -23,6 +23,7 @@ async function addEntry(req, res) {
     return res.status(400).send();
   }
   
+  
   // errors.details[0].message;
 
   // do I validate the token?

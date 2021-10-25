@@ -43,6 +43,7 @@ async function getEntries(req, res) {
       console.log("a3");
       // which status do I use here?
       // 404, 401, 403?
+      // 204?
     }
     console.log("a4");
 
