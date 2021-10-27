@@ -9,15 +9,15 @@ async function addEntry(req, res) {
     type,
     value
   } = req.body;
-
+  
   const errors = validateEntry.validate({
     description,
     value,
     type
   }).error;
-
+  
   if(errors) {
-    return res.status(400).send(errors.details[0].message);
+    return res.status(400).send({message: errors.details[0].message});
   }
 
   const authorization = req.headers['authorization'];

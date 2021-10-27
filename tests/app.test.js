@@ -40,7 +40,7 @@ describe("POST /sign-up", () => {
     expect(status).toEqual(409);
   });
 
-  it("returns 400 when body is filled correctly", async () => {
+  it("returns 400 when body is filled incorrectly", async () => {
     const body = {
       name: "M",
       email: "mayara2021@gmail",
@@ -100,7 +100,7 @@ describe("POST /login", () => {
     expect(status).toEqual(400);
   })
 
-  it("return 401 when body data is invalid", async () => {
+  it("return 401 when login data is invalid", async () => {
     const body = {
       email: "mayara2021@gmail.com",
       password: "123457",
