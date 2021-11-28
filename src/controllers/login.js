@@ -1,22 +1,18 @@
-import connection from "../database/database.js";
-import { validateLogIn } from "../validation/login.js";
-
-import bcrypt from "bcrypt";
-import { v4 as uuid } from "uuid";
+import bcrypt from 'bcrypt';
+import { v4 as uuid } from 'uuid';
+import connection from '../database/database.js';
+import { validateLogIn } from '../validation/login.js';
 
 async function startSession(req, res) {
-  const {
-    email,
-    password
-  } = req.body;
+  const { email, password } = req.body;
 
   const errors = validateLogIn.validate({
     email,
     password
   }).error;
 
-  if(errors) {
-    return res.status(400).send({message: errors.details[0].message});
+  if (errors) {
+    return res.status(400).send({ message: errors.details[0].message });
   }
 
   try {
@@ -26,16 +22,18 @@ async function startSession(req, res) {
     );
 
     if (result.rowCount === 0) {
-      return res
-        .status(404)
-        .send({message: "Você ainda não tem uma conta. Clique abaixo para se cadastrar."});
+      return res.status(404).send({
+        message:
+          'Você ainda não tem uma conta. Clique abaixo para se cadastrar.'
+      });
     }
 
     const user = result.rows[0];
 
     if (user && bcrypt.compareSync(password, user.password)) {
-
-      await connection.query('DELETE FROM sessions WHERE "userId" = $1', [user.id]);
+      await connection.query('DELETE FROM sessions WHERE "userId" = $1', [
+        user.id
+      ]);
 
       const token = uuid();
 
@@ -44,17 +42,16 @@ async function startSession(req, res) {
         [user.id, token]
       );
 
-      res.status(200).send({token, name: user.name});
-
-    } else {
-      res.status(401).send({message: "Incorrect email and/or password."});
+      return res.status(200).send({ token, name: user.name });
     }
-    
+    return res
+      .status(401)
+      .send({ message: 'Incorrect email and/or password.' });
   } catch (error) {
-    res.status(500).send({ message: "Não foi possível acessar a base de dados. Tente novamente." });
+    return res.status(500).send({
+      message: 'Não foi possível acessar a base de dados. Tente novamente.'
+    });
   }
 }
 
-export {
-  startSession
-}
+export { startSession };
