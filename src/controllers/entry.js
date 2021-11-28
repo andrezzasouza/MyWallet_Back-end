@@ -18,17 +18,11 @@ async function addEntry(req, res) {
   const { authorization } = req.headers;
   const token = authorization?.replace('Bearer ', '');
 
-  if (!token) return res.status(401).send('Acesso negado. Tente novamente.');
-
   try {
     const result = await connection.query(
       `SELECT * FROM sessions WHERE token = $1`,
       [token]
     );
-
-    if (result.rowCount === 0) {
-      return res.status(401).send('Acesso negado. Tente novamente.');
-    }
 
     const user = result.rows[0];
     const date = dayjs(Date.now()).format('YYYY-MM-DD');
@@ -46,7 +40,6 @@ async function addEntry(req, res) {
         value
       ]);
     }
-    const teste = await connection.query('SELECT * FROM users WHERE id =  84');
 
     if (type === 'expense') {
       await connection.query(`${updateBalance} - $2 WHERE id = $1`, [
