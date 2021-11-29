@@ -5,12 +5,6 @@ package-lock.json
 # testing
 .babelrc.json
 
-#dev
-.eslintrc.json
-.eslintcache
-.prettierrc.json
-.husky
-
 # logs
 logs
 *.log
