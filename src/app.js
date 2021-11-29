@@ -12,6 +12,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get('/health', (req, res) => {
+  res.sendStatus(200);
+});
+
 app.post('/login', startSession);
 app.post('/sign-up', createNewUser);
 app.get('/home', checkToken, getEntries);

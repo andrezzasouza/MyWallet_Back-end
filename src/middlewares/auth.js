@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import connection from '../database/database.js';
 
 async function checkToken(req, res, next) {

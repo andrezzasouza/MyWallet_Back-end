@@ -24,7 +24,7 @@ async function startSession(req, res) {
     if (result.rowCount === 0) {
       return res.status(404).send({
         message:
-          'Você ainda não tem uma conta. Clique abaixo para se cadastrar.'
+          'Você ainda não tem uma conta. Clique abaixo para se cadastrar ou entre com outro e-mail.'
       });
     }
 
@@ -46,7 +46,7 @@ async function startSession(req, res) {
     }
     return res
       .status(401)
-      .send({ message: 'Incorrect email and/or password.' });
+      .send({ message: 'Combinação e-mail/senha incorreta. Tente novamente.' });
   } catch (error) {
     return res.status(500).send({
       message: 'Não foi possível acessar a base de dados. Tente novamente.'
