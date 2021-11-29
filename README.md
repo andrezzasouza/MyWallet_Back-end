@@ -1,6 +1,6 @@
 <h1>MyWallet</h1>
 
-<img src='./src/assets/images/mywallet.gif' alt='Gif showing how to use MyWallet' align='right' style='margin-left: 25px;' />
+<img src='./assets/images/mywallet.gif' alt='Gif showing how to use MyWallet' align='right' style='margin-left: 25px;' />
 
 MyWallet is an app that helps you organize your finances.
 
@@ -135,7 +135,21 @@ Open your prefered terminal and run this command to install the dependencies:
   npm i
 ```
 
-5. **Explore MyWallet:**
+Occasionally, it is necessary to manually install some dependencies even after running _npm i_. Your teminal will let you know which dependencies if that is the case.
+
+Alternatively, you can look at the list of dependencies in the file package.json and install them.
+
+5. **Configure .env files:**
+
+Configure env files for production, development and tests.
+
+You can use .env.example as a guide.
+
+6. **Populate both databases:**
+
+This project comes with a databse_backup.sql file. This file can be used to help you set up both production and testing database.
+
+7. **Explore MyWallet:**
 
 In order to run MyWallet and get to explore it, you must run this command on your terminal:
 
