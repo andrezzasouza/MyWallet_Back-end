@@ -28,6 +28,25 @@ It allows you to:
 
 This app can help you understand your expenditure patterns. Therefore, it can also allow you to notice if you could make better use of your hard-earned money.
 
+<h3>Why?</h3>
+
+MyWallet is an excellent app to build because it can be used in our daily lives. It is not just for show.
+
+It can be used by real people to organize their finances and improve their lives by gaining awareness of how they spend their money.
+
+Its potential to help myself and other is why MyWallet is such an appealing app to me.
+
+<h3> Future Features </h3>
+<a href="https://github.com/andrezzasouza/MyWallet_Back-end/issues/4">
+
+- Configure /logOut route
+  </a>
+
+<a href="https://github.com/andrezzasouza/MyWallet_Back-end/issues/5">
+
+- Implement remaining integration tests
+  </a>
+
 <h2 id="tech">Technologies</h2>
 
 - Javascript
