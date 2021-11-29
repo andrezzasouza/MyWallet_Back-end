@@ -4,18 +4,7 @@ async function getEntries(req, res) {
   const { authorization } = req.headers;
   const token = authorization?.replace('Bearer ', '');
 
-  if (!token) return res.status(401).send('Acesso negado. Tente novamente.');
-
   try {
-    const checkToken = await connection.query(
-      `SELECT * FROM sessions WHERE token = $1`,
-      [token]
-    );
-
-    if (checkToken.rowCount === 0) {
-      return res.status(401).send('Acesso negado. Tente novamente.');
-    }
-
     const result = await connection.query(
       `
         SELECT 
