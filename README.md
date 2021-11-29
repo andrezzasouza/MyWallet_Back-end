@@ -31,12 +31,15 @@ This app can help you understand your expenditure patterns. Therefore, it can al
 <h2 id="tech">Technologies</h2>
 
 - Javascript
-- React JS
-- React Router DOM
+- Node.js
+- Express
 - Axios
-- Styled Components
 - Husky
-- Cypress
+- Jest
+- Supertest
+- Dotenv
+- Postgres
+- Joi
 
 <h2 id="reqs">Requirements</h2>
 
@@ -92,16 +95,16 @@ You can clone this repository by copy this link:
 Then you open your terminal and run:
 
 ```
-git clone https://github.com/andrezzasouza/MyWallet_Front-end.git
+git clone https://github.com/andrezzasouza/MyWallet_Back-end.git
 ```
 
-2. **Clone the back-end repository:**
+2. **Clone the front-end repository:**
 
-As this project consists of both front and back-end, you will need to clone the back-end repository as well.
+As this project consists of both front and back-end, you will need to clone the front-end repository as well.
 
-It can be done here: https://github.com/andrezzasouza/MyWallet_Back-end
+It can be done here: https://github.com/andrezzasouza/MyWallet_Front-end
 
-3. **Configure the back-end:**
+3. **Configure the front-end:**
 
 You can find the instructions on the link above.
 
@@ -119,4 +122,22 @@ In order to run MyWallet and get to explore it, you must run this command on you
 
 ```
   npm start
+```
+
+Development:
+
+```
+  npm run start:dev
+```
+
+Test:
+
+```
+  npm test
+```
+
+Watch All Test:
+
+```
+npm run test:watch
 ```
