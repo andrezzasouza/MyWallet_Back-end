@@ -2,9 +2,6 @@
 /node_modules
 package-lock.json
 
-# testing
-.babelrc.json
-
 # logs
 logs
 *.log

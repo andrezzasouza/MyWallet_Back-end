@@ -109,7 +109,7 @@ Some steps are necessary for this project to run as it should in your machine.
 
 You can clone this repository by copy this link:
 
-<img src='./src/assets/images/back-clone.gif' alt="Gif showing how to copy this repository's clone link" />
+<img src='./assets/images/back-clone.gif' alt="Gif showing how to copy this repository's clone link" />
 
 Then you open your terminal and run:
 
